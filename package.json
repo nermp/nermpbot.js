@@ -1,0 +1,18 @@
+{
+  "name": "nermpbot",
+  "version": "1.0.0",
+  "description": "Version one of Nermpbot.",
+  "main": "nermpbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Edwin Tan",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.1.0",
+    "eslint-plugin-react": "^7.20.0"
+  }
+}
