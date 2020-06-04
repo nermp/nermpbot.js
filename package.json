@@ -9,7 +9,9 @@
   "author": "Edwin Tan",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "discord.js": "^12.2.0",
+    "urllib": "^2.35.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "eslint": "^7.1.0",
