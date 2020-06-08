@@ -3,10 +3,11 @@ const fs = require("fs");
 const Discord = require("discord.js");
 
 // create a new Discord client
-const { prefix, token, snipes, snipeinfo } = require("./config.json");
+const { prefix, token, snipes, snipeinfo, numberOfServers } = require("./config.json");
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
+let updateNum = -1;
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -23,22 +24,11 @@ client.once("ready", () => {
 });
 
 client.on("message", message => {
-	if (message.content == (prefix) + "info") {
-		const infoEmbed = new Discord.MessageEmbed()
-			.setColor("#0000FF")
-			.setTitle("Info")
-			.setAuthor("NermpBot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
-			.setDescription("The NermpBot is a bot.")
-			.setThumbnail("https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
-			.addFields(
-				{ name: "Author:", value: "nermp#5841" },
-			)
-			.addField("Number of servers I'm in:", client.guilds.cache.size, true)
-			.setTimestamp()
-			.setFooter(`Server name: ${message.guild.name}`);
-            message.channel.send(infoEmbed);
+	if(updateNum > 100 || updateNum == -1) {
+		numberOfServers[0] = client.guilds.cache.size;
+		updateNum = 0;
 	}
-
+	updateNum++;
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();
@@ -59,13 +49,17 @@ client.on("message", message => {
 client.on("messageDelete", message => {
 	let snipe = new Array({ author: message.author, message: message.content, date: new Date() });
 	snipeinfo.unshift(snipe);
-	snipes.unshift(`"${message.content}" was deleted by ${message.author} at ${new Date()}`);
+	if (message.content !== "") {
+		snipes.unshift(`"${message.content}" was deleted by ${message.author} in ${message.channel} at ${new Date()}`);
+	}
 });
 
 client.on("messageUpdate", message => {
 	let snipe = new Array({ author: message.author, message: message.content, date: new Date() });
 	snipeinfo.unshift(snipe);
-	snipes.unshift(`"${message.content}" was edited by ${message.author} at ${new Date()}`);
+	if (message.content !== "") {
+		snipes.unshift(`"${message.content}" was edited by ${message.author} in ${message.channel} at ${new Date()}`);
+	}
 });
 
 // login to Discord with your app"s token

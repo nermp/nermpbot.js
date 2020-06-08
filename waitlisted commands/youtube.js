@@ -11,20 +11,20 @@ module.exports = {
             return message.channel.send(`you need to specify what you're trying to search for ${message.author}`);
         } else{
             message.channel.send("Here are three results for your search query.")
-            var test = new XMLHttpRequest();
-            var bruh = test.open('POST', "http://www.youtube.com/results?search_query=" + args, false);
-            var rx = new RegExp("href=\"\\/watch\\?v=(.{11})", "g");
-            var search_results = new Array();
-            while((match = rx.exec(bruh)) !== null){
+            let test = new XMLHttpRequest();
+            let bruh = test.open('POST', "http://www.youtube.com/results?search_query=" + args, false);
+            let rx = new RegExp("href=\"\\/watch\\?v=(.{11})", "g");
+            let search_results = new Array();
+            while((match = rx.exec(bruh)) !== null) {
                 search_results.push(match);
             } 
-            //var search_results = bruh.match("href=\"\\/watch\\?v=(.{11})");
+            //let search_results = bruh.match("href=\"\\/watch\\?v=(.{11})");
             //const response = test.responseText;
             //message.channel.send(response);
             message.channel.send("http://www.youtube.com/results?search_query=" + args);
-            message.channel.send("http://www.youtube.com/watch?v=" + search_results[0])
-            message.channel.send("http://www.youtube.com/watch?v=" + search_results[2])
-            message.channel.send("http://www.youtube.com/watch?v=" + search_results[4])
+            message.channel.send("http://www.youtube.com/watch?v=" + search_results[0]);
+            message.channel.send("http://www.youtube.com/watch?v=" + search_results[2]);
+            message.channel.send("http://www.youtube.com/watch?v=" + search_results[4]);
             /* //const query_string = urllib.parse({"search_query": agrs});
             const test = urllib.request("http://www.youtube.com/results?" + args,{
                 method: "GET",

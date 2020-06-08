@@ -39,7 +39,7 @@
 		"space-in-parens": "warn",
 		"space-infix-ops": "error",
 		"space-unary-ops": "error",
-		"spaced-comment": "error",
+		//"spaced-comment": "error",
 		"yoda": "error"
 	}
 }
