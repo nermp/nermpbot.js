@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 const { prefix } = require("../config.json");
 module.exports = {
 	name: "help",
