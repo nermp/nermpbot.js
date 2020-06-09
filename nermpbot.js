@@ -3,10 +3,11 @@ const fs = require("fs");
 const Discord = require("discord.js");
 
 // create a new Discord client
-const { prefix, token, snipes, snipeinfo, numberOfServers } = require("./config.json");
+const { prefix, token, snipeinfo, numberOfServers } = require("./config.json");
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
+let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let updateNum = -1;
 
 for (const file of commandFiles) {
@@ -47,19 +48,46 @@ client.on("message", message => {
 });
 
 client.on("messageDelete", message => {
-	let snipe = new Array({ author: message.author, message: message.content, date: new Date() });
-	snipeinfo.unshift(snipe);
-	if (message.content !== "") {
-		snipes.unshift(`"${message.content}" was deleted by ${message.author} in ${message.channel} at ${new Date()}`);
+	if (message.author.bot) {
+		return;
 	}
+	//the array is [author, message, the date, users avatar, and whether or not the message was edited or not. if it was, then the current message is also included.]
+	let today = new Date();
+	let thisMonth = months[today.getMonth()];
+	let hour = today.getHours();
+	let minute = today.getMinutes();
+	let noon = "AM";
+	if (hour > 12) {
+		hour = hour - 12;
+		noon = "PM";
+	}
+	if (minute < 10) {
+		minute = "0" + minute;
+	}
+	let date = `${hour}:${minute}:${today.getSeconds()} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
+	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), false];
+	snipeinfo.unshift(snipe);
 });
 
-client.on("messageUpdate", message => {
-	let snipe = new Array({ author: message.author, message: message.content, date: new Date() });
-	snipeinfo.unshift(snipe);
-	if (message.content !== "") {
-		snipes.unshift(`"${message.content}" was edited by ${message.author} in ${message.channel} at ${new Date()}`);
+client.on("messageUpdate", function(message, newMessage) {
+	if (message.author.bot) {
+		return;
 	}
+	let today = new Date();
+	let thisMonth = months[today.getMonth()];
+	let hour = today.getHours();
+	let minute = today.getMinutes();
+	let noon = "AM";
+	if (hour > 12) {
+		hour = hour - 12;
+		noon = "PM";
+	}
+	if (minute < 10) {
+		minute = "0" + minute;
+	}
+	let date = `${hour}:${minute}:${today.getSeconds()} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
+	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), true, newMessage.content];
+	snipeinfo.unshift(snipe);
 });
 
 // login to Discord with your app"s token
