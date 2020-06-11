@@ -1,9 +1,9 @@
-// require the discord.js module
+// require the necessary modules
 const fs = require("fs");
 const Discord = require("discord.js");
 
-// create a new Discord client
-const { prefix, token, snipeinfo, numberOfServers } = require("./config.json");
+// define constants and variables
+const { prefix, token, numberOfServers } = require("./config.json");
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
@@ -36,9 +36,9 @@ client.on("message", message => {
 	console.log(message.content);
 	const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 	if (!command) return;
-	if (command.args && !args.length) {
+	/* if (command.args && !args.length) {
 		return message.channel.send(`you need to put arguments ${message.author}`);
-	}
+	} */
 	try {
 		command.execute(message, args);
 	} catch (error) {
@@ -66,7 +66,43 @@ client.on("messageDelete", message => {
 	}
 	let date = `${hour}:${minute}:${today.getSeconds()} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
 	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), false];
-	snipeinfo.unshift(snipe);
+	let snipeinfoJSON = { 
+		"snipeinfo": [], 
+	}; 
+	fs.access(`server_snipes/${message.guild.id}.txt`, error => {
+		if (!error) {
+			message.channel.send("checking");
+			fs.renameSync(`server_snipes/${message.guild.id}.txt`, `server_snipes/${message.guild.id}.json`, err => {
+			if (err) {
+				console.log(err);
+				return;
+			}
+				console.log(`${message.guild.id}.txt renamed to ${message.guild.id}.json`);
+			});
+		} else {
+			fs.writeFileSync(`server_snipes/${message.guild.id}.txt`, JSON.stringify(snipeinfoJSON), { flag: "wx" }, err => {
+				//if (err) message.reply("there was an error trying to execute that command");
+				if (err) {
+					if (err.code === "EEXIST") {
+						return;
+					}
+				console.log(err);
+				return;
+				}
+				console.log("file written");
+			}); 
+			fs.renameSync(`server_snipes/${message.guild.id}.txt`, `server_snipes/${message.guild.id}.json`, err => {
+			if (err) {
+				console.log(err);
+				return;
+			}
+				console.log(`${message.guild.id}.txt renamed to ${message.guild.id}.json`);
+			});
+		}
+		const { snipeinfo } = require(`./server_snipes/${message.guild.id}.json`);
+		snipeinfo.unshift(snipe);
+		//message.channel.send(snipeinfotest);
+	});
 });
 
 client.on("messageUpdate", function(message, newMessage) {
@@ -87,7 +123,43 @@ client.on("messageUpdate", function(message, newMessage) {
 	}
 	let date = `${hour}:${minute}:${today.getSeconds()} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
 	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), true, newMessage.content];
-	snipeinfo.unshift(snipe);
+	let snipeinfoJSON = { 
+		"snipeinfo": [], 
+	}; 
+	fs.access(`server_snipes/${message.guild.id}.txt`, error => {
+		if (!error) {
+			message.channel.send("checking");
+			fs.renameSync(`server_snipes/${message.guild.id}.txt`, `server_snipes/${message.guild.id}.json`, err => {
+			if (err) {
+				console.log(err);
+				return;
+			}
+				console.log(`${message.guild.id}.txt renamed to ${message.guild.id}.json`);
+			});
+		} else {
+			fs.writeFileSync(`server_snipes/${message.guild.id}.txt`, JSON.stringify(snipeinfoJSON), { flag: "wx" }, err => {
+				//if (err) message.reply("there was an error trying to execute that command");
+				if (err) {
+					if (err.code === "EEXIST") {
+						return;
+					}
+				console.log(err);
+				return;
+				}
+				console.log("file written");
+			}); 
+			fs.renameSync(`server_snipes/${message.guild.id}.txt`, `server_snipes/${message.guild.id}.json`, err => {
+			if (err) {
+				console.log(err);
+				return;
+			}
+				console.log(`${message.guild.id}.txt renamed to ${message.guild.id}.json`);
+			});
+		}
+		const { snipeinfo } = require(`./server_snipes/${message.guild.id}.json`);
+		snipeinfo.unshift(snipe);
+		//message.channel.send(snipeinfotest);
+	});
 });
 
 // login to Discord with your app"s token

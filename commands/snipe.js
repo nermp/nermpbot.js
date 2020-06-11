@@ -1,14 +1,17 @@
+/* eslint-disable brace-style */
 const Discord = require("discord.js");
-const { prefix, snipeinfo } = require("../config.json");
+const { prefix } = require("../config.json");
 
 module.exports = {
     name: "snipe",
     aliases: ["sn", "deleted", "del", "edit", "ed"],
 	description: `Tells you the last deleted or edited message. You can also see previously edited/deleted messages by inputting the command as \`${prefix}snipe <number>\`.`,
 	execute(message, args) {
+        const { snipeinfo } = require(`../server_snipes/${message.guild.id}.json`);
+        //message.channel.send(snipeinfo);
         const snipeEmbed = new Discord.MessageEmbed()
             .setColor("#0000FF")
-            .setAuthor("NermpBot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
+            .setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
             .setTimestamp()
             .setFooter(`Server name: ${message.guild.name}`);
         if(snipeinfo.length == 0) {
@@ -54,10 +57,5 @@ module.exports = {
         } else {
                 message.channel.send(`You are requesting a snipe that doesn't exist. There are currently ${snipeinfo.length} snipes available. `);
         }
-        snipeEmbed.setTitle("Info");
-        snipeEmbed.setThumbnail("https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png");
-        snipeEmbed.addFields(
-            { name: "Author:", value: "nermp#5841" },
-        );
 	},
 };
