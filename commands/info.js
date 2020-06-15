@@ -9,7 +9,7 @@ module.exports = {
 			const infoEmbed = new Discord.MessageEmbed()
 			.setColor("#0000FF")
 			.setTitle("Info")
-			.setAuthor("nermpbot (testing)#8323", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
+			.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
 			.setDescription("The nermpbot is a bot.")
 			.setThumbnail("https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
 			.addFields(
