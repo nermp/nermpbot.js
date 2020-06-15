@@ -14,8 +14,9 @@ module.exports = {
 			.setThumbnail("https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
 			.addFields(
 				{ name: "Author:", value: "nermp#5841" },
+				{ name: "Number of servers I'm in:", value: numberOfServers },
 			)
-			.addField("Number of servers I'm in:", numberOfServers, true)
+			//.addField("Number of servers I'm in:", numberOfServers, true)
 			.setTimestamp()
 			.setFooter(`Server name: ${message.guild.name}`);
             message.channel.send(infoEmbed);
@@ -50,7 +51,7 @@ module.exports = {
 			.setAuthor("NermpBot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
 			.setThumbnail(avatar[0])
 			.addFields(
-				{ name: "ID:", value:id[0] },
+				{ name: "ID:", value: id[0] },
 				{ name: "Account Created at:", value: createdAt[0] },
 				{ name: "Bot:", value: bot[0] },
 				{ name: "Last Message Sent:", value: lastMessage[0] },

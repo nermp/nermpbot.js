@@ -47,6 +47,41 @@ client.on("message", message => {
 	}
 });
 
+client.on("guildCreate", guild => {
+	let snipeinfoJSON = { 
+		"snipeinfo": [], 
+	}; 
+	fs.access(`server_snipes/${guild.id}.txt`, error => {
+		if (!error) {
+			fs.renameSync(`server_snipes/${guild.id}.txt`, `server_snipes/${guild.id}.json`, err => {
+			if (err) {
+				console.log(err);
+				return;
+			}
+				console.log(`${guild.id}.txt renamed to ${guild.id}.json`);
+			});
+		} else {
+			fs.writeFileSync(`server_snipes/${guild.id}.txt`, JSON.stringify(snipeinfoJSON), { flag: "wx" }, err => {
+				if (err) {
+					if (err.code === "EEXIST") {
+						return;
+					}
+				console.log(err);
+				return;
+				}
+				console.log("file written");
+			}); 
+			fs.renameSync(`server_snipes/${guild.id}.txt`, `server_snipes/${guild.id}.json`, err => {
+			if (err) {
+				console.log(err);
+				return;
+			}
+				console.log(`${guild.id}.txt renamed to ${guild.id}.json`);
+			});
+		}
+	});
+});
+
 client.on("messageDelete", message => {
 	if (message.author.bot) {
 		return;
@@ -56,6 +91,7 @@ client.on("messageDelete", message => {
 	let thisMonth = months[today.getMonth()];
 	let hour = today.getHours();
 	let minute = today.getMinutes();
+	let second = today.getSeconds();
 	let noon = "AM";
 	if (hour > 12) {
 		hour = hour - 12;
@@ -64,7 +100,10 @@ client.on("messageDelete", message => {
 	if (minute < 10) {
 		minute = "0" + minute;
 	}
-	let date = `${hour}:${minute}:${today.getSeconds()} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
+	if (second < 10) {
+		second = "0" + second;
+	}
+	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
 	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), false];
 	let snipeinfoJSON = { 
 		"snipeinfo": [], 
@@ -109,10 +148,14 @@ client.on("messageUpdate", function(message, newMessage) {
 	if (message.author.bot) {
 		return;
 	}
+	if (message.content == newMessage.content) {
+		return;
+	}
 	let today = new Date();
 	let thisMonth = months[today.getMonth()];
 	let hour = today.getHours();
 	let minute = today.getMinutes();
+	let second = today.getSeconds();
 	let noon = "AM";
 	if (hour > 12) {
 		hour = hour - 12;
@@ -121,7 +164,10 @@ client.on("messageUpdate", function(message, newMessage) {
 	if (minute < 10) {
 		minute = "0" + minute;
 	}
-	let date = `${hour}:${minute}:${today.getSeconds()} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
+	if (second < 10) {
+		second = "0" + second;
+	}
+	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
 	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), true, newMessage.content];
 	let snipeinfoJSON = { 
 		"snipeinfo": [], 
