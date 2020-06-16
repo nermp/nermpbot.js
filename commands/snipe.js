@@ -19,36 +19,40 @@ module.exports = {
         } else if (args === "" || args <= 0) {
             snipeEmbed.setTitle(`Snipe (1/${snipeinfo.length}) `);
             snipeEmbed.setThumbnail(snipeinfo[0][3]);
-            if (snipeinfo[0][4] == true) {
+            if (snipeinfo[0][5] == true) {
                 snipeEmbed.addFields(
                     { name: "Author:", value: snipeinfo[0][0] },
                     { name: "Message edited:", value: snipeinfo[0][1] },
+                    { name: "Message edited to:", value: snipeinfo[0][6] },
                     { name: "Time edited:", value: snipeinfo[0][2] },
-                    { name: "Message edited to:", value: snipeinfo[0][5] },
+                    { name: "Channel edited in:", value: snipeinfo[0][4] },
                 );
             } else {
                 snipeEmbed.addFields(
                     { name: "Author:", value: snipeinfo[0][0] },
                     { name: "Message deleted:", value: snipeinfo[0][1] },
                     { name: "Time deleted:", value: snipeinfo[0][2] },
+                    { name: "Channel deleted in:", value: snipeinfo[0][4] },
                 );
             }
             message.channel.send(snipeEmbed);
         } else if (args <= snipeinfo.length) {
             snipeEmbed.setTitle(`Snipe (${args}/${snipeinfo.length}) `);
             snipeEmbed.setThumbnail(snipeinfo[args - 1][3]);
-            if (snipeinfo[args - 1][4] == true) {
+            if (snipeinfo[args - 1][5] == true) {
                 snipeEmbed.addFields(
                     { name: "Author:", value: snipeinfo[args - 1][0] },
                     { name: "Message edited:", value: snipeinfo[args - 1][1] },
+                    { name: "Message edited to:", value: snipeinfo[args - 1][6] },
                     { name: "Time edited:", value: snipeinfo[args - 1][2] },
-                    { name: "Message edited to:", value: snipeinfo[args - 1][5] },
+                    { name: "Channel edited in:", value: snipeinfo[args - 1][4] },
                 );
             } else {
                 snipeEmbed.addFields(
                     { name: "Author:", value: snipeinfo[args - 1][0] },
                     { name: "Message deleted:", value: snipeinfo[args - 1][1] },
                     { name: "Time deleted:", value: snipeinfo[args - 1][2] },
+                    { name: "Channel deleted in:", value: snipeinfo[args - 1][4] },
                 );
             }
             message.channel.send(snipeEmbed);

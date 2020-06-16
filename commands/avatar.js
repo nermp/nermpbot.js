@@ -1,6 +1,6 @@
 module.exports = {
 	name: "avatar",
-	aliases: ["icon", "pfp", "ava", "av"],
+	aliases: ["icon", "pfp", "ava", "a"],
 	description: "By itself it'll send your profile picture, but you can mention somebody to get theirs.",
 	execute(message) {
 		if (!message.mentions.users.size) {
