@@ -9,6 +9,8 @@ client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 let updateNum = -1;
+const joinID = "722528215977164840";
+const leaveID = "722528230313295933";
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -47,7 +49,7 @@ client.on("message", message => {
 	}
 });
 
-client.on("guildCreate", guild => {
+function createSnipeCache(guild) {
 	let snipeinfoJSON = { 
 		"snipeinfo": [], 
 	}; 
@@ -80,6 +82,33 @@ client.on("guildCreate", guild => {
 			});
 		}
 	});
+}
+
+client.on("guildCreate", guild => {
+	createSnipeCache(guild);
+	const joinEmbed = new Discord.MessageEmbed()
+			.setColor("#0000FF")
+			.setTitle("Joined Server")
+			.setDescription(`Server name: ${guild.name}`)
+			.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
+			.setThumbnail(guild.iconURL())
+			.setTimestamp()
+			.setFooter(`Server name: nermpbot server`); 
+	const channel = client.channels.cache.get(joinID);
+	channel.send(joinEmbed);
+});
+
+client.on("guildDelete", guild => {
+	const leaveEmbed = new Discord.MessageEmbed()
+			.setColor("#0000FF")
+			.setTitle("Left Server")
+			.setDescription(`Server name: ${guild.name}`)
+			.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
+			.setThumbnail(guild.iconURL())
+			.setTimestamp()
+            .setFooter(`Server name: nermpbot server`); 
+	const channel = client.channels.cache.get(leaveID);
+	channel.send(leaveEmbed);
 });
 
 client.on("messageDelete", message => {
@@ -104,44 +133,10 @@ client.on("messageDelete", message => {
 		second = "0" + second;
 	}
 	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
-	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), false];
-	let snipeinfoJSON = { 
-		"snipeinfo": [], 
-	}; 
-	fs.access(`server_snipes/${message.guild.id}.txt`, error => {
-		if (!error) {
-			message.channel.send("checking");
-			fs.renameSync(`server_snipes/${message.guild.id}.txt`, `server_snipes/${message.guild.id}.json`, err => {
-			if (err) {
-				console.log(err);
-				return;
-			}
-				console.log(`${message.guild.id}.txt renamed to ${message.guild.id}.json`);
-			});
-		} else {
-			fs.writeFileSync(`server_snipes/${message.guild.id}.txt`, JSON.stringify(snipeinfoJSON), { flag: "wx" }, err => {
-				//if (err) message.reply("there was an error trying to execute that command");
-				if (err) {
-					if (err.code === "EEXIST") {
-						return;
-					}
-				console.log(err);
-				return;
-				}
-				console.log("file written");
-			}); 
-			fs.renameSync(`server_snipes/${message.guild.id}.txt`, `server_snipes/${message.guild.id}.json`, err => {
-			if (err) {
-				console.log(err);
-				return;
-			}
-				console.log(`${message.guild.id}.txt renamed to ${message.guild.id}.json`);
-			});
-		}
-		const { snipeinfo } = require(`./server_snipes/${message.guild.id}.json`);
-		snipeinfo.unshift(snipe);
-		//message.channel.send(snipeinfotest);
-	});
+	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, false];
+	createSnipeCache(message.guild);
+	const { snipeinfo } = require(`./server_snipes/${message.guild.id}.json`);
+	snipeinfo.unshift(snipe);
 });
 
 client.on("messageUpdate", function(message, newMessage) {
@@ -168,44 +163,10 @@ client.on("messageUpdate", function(message, newMessage) {
 		second = "0" + second;
 	}
 	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
-	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), true, newMessage.content];
-	let snipeinfoJSON = { 
-		"snipeinfo": [], 
-	}; 
-	fs.access(`server_snipes/${message.guild.id}.txt`, error => {
-		if (!error) {
-			message.channel.send("checking");
-			fs.renameSync(`server_snipes/${message.guild.id}.txt`, `server_snipes/${message.guild.id}.json`, err => {
-			if (err) {
-				console.log(err);
-				return;
-			}
-				console.log(`${message.guild.id}.txt renamed to ${message.guild.id}.json`);
-			});
-		} else {
-			fs.writeFileSync(`server_snipes/${message.guild.id}.txt`, JSON.stringify(snipeinfoJSON), { flag: "wx" }, err => {
-				//if (err) message.reply("there was an error trying to execute that command");
-				if (err) {
-					if (err.code === "EEXIST") {
-						return;
-					}
-				console.log(err);
-				return;
-				}
-				console.log("file written");
-			}); 
-			fs.renameSync(`server_snipes/${message.guild.id}.txt`, `server_snipes/${message.guild.id}.json`, err => {
-			if (err) {
-				console.log(err);
-				return;
-			}
-				console.log(`${message.guild.id}.txt renamed to ${message.guild.id}.json`);
-			});
-		}
-		const { snipeinfo } = require(`./server_snipes/${message.guild.id}.json`);
-		snipeinfo.unshift(snipe);
-		//message.channel.send(snipeinfotest);
-	});
+	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, true, newMessage.content];
+	createSnipeCache(message.guild);
+	const { snipeinfo } = require(`./server_snipes/${message.guild.id}.json`);
+	snipeinfo.unshift(snipe);
 });
 
 // login to Discord with your app"s token
