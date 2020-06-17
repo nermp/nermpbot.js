@@ -70,8 +70,11 @@ module.exports = {
             [",", " "],
         ]);
         for (let x = 0; x < letterMap.size; x++) {
-            word[x] = letterMap.get(word[x]);
+            if (letterMap.has(word[x])) {
+                word[x] = letterMap.get(word[x]);
+            }
         }
         message.channel.send(word.join(""));
+        message.delete();
 	},
 };
