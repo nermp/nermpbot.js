@@ -1,11 +1,12 @@
 const Discord = require("discord.js");
+const ud = require("urban-dictionary");
+
 
 module.exports = {
 	name: "urbandictionary",
 	aliases: ["urban", "urb", "dic", "ud"],
 	description: "Gives a random word from urban dictionary, but you can also search for a term.",
 	execute(message, args) {
-		const ud = require("urban-dictionary");
 		if (!args || args == "") {
 			ud.random().then((result) => {
 				const urbanEmbed = new Discord.MessageEmbed()

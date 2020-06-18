@@ -28,22 +28,31 @@ module.exports = {
 				return user.displayAvatarURL({ format: "png", dynamic: true });
 			});
 			const createdAt = message.mentions.users.map(user => {
-				return user.createdAt;
+				let timeCreatedAt = user.createdAt;
+				let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+				let thisMonth = months[timeCreatedAt.getMonth()];
+				let hour = timeCreatedAt.getHours();
+				let minute = timeCreatedAt.getMinutes();
+				let second = timeCreatedAt.getSeconds();
+				let noon = "AM";
+				if (hour > 12) {
+					hour = hour - 12;
+					noon = "PM";
+				}
+				if (minute < 10) {
+					minute = "0" + minute;
+				}
+				if (second < 10) {
+					second = "0" + second;
+				}
+				let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${timeCreatedAt.getDate()},  ${timeCreatedAt.getFullYear()}`;
+				return date;
 			});
 			const id = message.mentions.users.map(user => {
 				return user.id;
 			});
 			const tag = message.mentions.users.map(user => {
 				return user.tag;
-			});
-			const lastMessageID = message.mentions.users.map(user => {
-				return user.lastMessageID;
-			});
-			const lastMessage = message.mentions.users.map(user => {
-				return user.lastMessage;
-			});
-			const lastChannelID = message.mentions.users.map(user => {
-				return user.lastMessageChannelID;
 			});
 			const infoEmbed = new Discord.MessageEmbed()
 			.setColor("#0000FF")
@@ -54,9 +63,6 @@ module.exports = {
 				{ name: "ID:", value: id[0] },
 				{ name: "Account Created at:", value: createdAt[0] },
 				{ name: "Bot:", value: bot[0] },
-				{ name: "Last Message Sent:", value: lastMessage[0] },
-				{ name: "ID of Last Message Sent:", value: lastMessageID[0] },
-				{ name: "ID of Channel Last Message Was Sent In:", value: lastChannelID[0] },
 			)
 			.setTimestamp()
 			.setFooter(`Server name: ${message.guild.name}`);

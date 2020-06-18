@@ -75,6 +75,5 @@ module.exports = {
             }
         }
         message.channel.send(word.join(""));
-        message.delete();
 	},
 };
