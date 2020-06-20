@@ -11,6 +11,7 @@ let months = ["January", "February", "March", "April", "May", "June", "July", "A
 let updateNum = -1;
 const joinID = "722528215977164840";
 const leaveID = "722528230313295933";
+let snipeCache;
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -49,7 +50,7 @@ client.on("message", message => {
 	}
 });
 
-function createSnipeCache(guild) {
+function createSnipeCache(guild, message) {
 	let snipeinfoJSON = { 
 		"snipeinfo": [], 
 	}; 
@@ -81,7 +82,33 @@ function createSnipeCache(guild) {
 				console.log(`${guild.id}.txt renamed to ${guild.id}.json`);
 			});
 		}
+		if (message != null) {
+			snipeCache = require(`./server_snipes/${guild.id}.json`);
+			snipeCache.snipeinfo.unshift(createSnipe(message));
+		}
 	});
+}
+
+function createSnipe(message) {
+	let today = new Date();
+	let thisMonth = months[today.getMonth()];
+	let hour = today.getHours();
+	let minute = today.getMinutes();
+	let second = today.getSeconds();
+	let noon = "AM";
+	if (hour > 12) {
+		hour = hour - 12;
+		noon = "PM";
+	}
+	if (minute < 10) {
+		minute = "0" + minute;
+	}
+	if (second < 10) {
+		second = "0" + second;
+	}
+	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
+	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, false];
+	return snipe;
 }
 
 client.on("guildCreate", guild => {
@@ -116,27 +143,7 @@ client.on("messageDelete", message => {
 		return;
 	}
 	//the array is [author, message, the date, users avatar, and whether or not the message was edited or not. if it was, then the current message is also included.]
-	let today = new Date();
-	let thisMonth = months[today.getMonth()];
-	let hour = today.getHours();
-	let minute = today.getMinutes();
-	let second = today.getSeconds();
-	let noon = "AM";
-	if (hour > 12) {
-		hour = hour - 12;
-		noon = "PM";
-	}
-	if (minute < 10) {
-		minute = "0" + minute;
-	}
-	if (second < 10) {
-		second = "0" + second;
-	}
-	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
-	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, false];
-	createSnipeCache(message.guild);
-	const { snipeinfo } = require(`./server_snipes/${message.guild.id}.json`);
-	snipeinfo.unshift(snipe);
+	createSnipeCache(message.guild, message);
 });
 
 client.on("messageUpdate", function(message, newMessage) {
@@ -146,27 +153,7 @@ client.on("messageUpdate", function(message, newMessage) {
 	if (message.content == newMessage.content) {
 		return;
 	}
-	let today = new Date();
-	let thisMonth = months[today.getMonth()];
-	let hour = today.getHours();
-	let minute = today.getMinutes();
-	let second = today.getSeconds();
-	let noon = "AM";
-	if (hour > 12) {
-		hour = hour - 12;
-		noon = "PM";
-	}
-	if (minute < 10) {
-		minute = "0" + minute;
-	}
-	if (second < 10) {
-		second = "0" + second;
-	}
-	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
-	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, true, newMessage.content];
-	createSnipeCache(message.guild);
-	const { snipeinfo } = require(`./server_snipes/${message.guild.id}.json`);
-	snipeinfo.unshift(snipe);
+	createSnipeCache(message.guild, message);
 });
 
 // login to Discord with your app"s token
