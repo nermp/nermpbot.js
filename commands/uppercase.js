@@ -1,7 +1,8 @@
 module.exports = {
 	name: "uppercase",
 	aliases: ["upper", "uc"],
-	description: "Will convert all lowercase letters to uppercase.",
+    description: "Will convert all lowercase letters to uppercase.",
+    usage: "<message to capitalize>",
 	execute(message, args) {
         const word = args.toString().split("");
         let letterMap = new Map([

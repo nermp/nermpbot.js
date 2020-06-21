@@ -6,6 +6,7 @@ module.exports = {
 	name: "urbandictionary",
 	aliases: ["urban", "urb", "dic", "ud"],
 	description: "Gives a random word from urban dictionary, but you can also search for a term.",
+	usage: "<optional search term>",
 	execute(message, args) {
 		if (!args || args == "") {
 			ud.random().then((result) => {

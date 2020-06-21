@@ -5,7 +5,8 @@ module.exports = {
 	name: "helpembed",
 	description: "List all of my commands or info about a specific command in an giant embed(normal help command is recommended).",
 	aliases: ["help2", "helpe", "h2", "he"],
-	execute(message) {
+    usage: "",
+    execute(message) {
         const { commands } = message.client;
         let data = [];
         let names = commands.map(command => command.name);  

@@ -25,6 +25,12 @@ for (const file of commandFiles) {
 // this event will only trigger one time after logging in
 client.once("ready", () => {
 	console.log("Ready!");
+	let guilds = client.guilds.map(guild => {
+		return guild.id;
+	});
+	for (let i = 0; i < client.guilds.cache.size; i++) {
+		createSnipeCache(guilds[i]);
+	}
 });
 
 client.on("message", message => {
@@ -96,6 +102,10 @@ function createSnipe(message) {
 	let minute = today.getMinutes();
 	let second = today.getSeconds();
 	let noon = "AM";
+	hour = hour - 5;
+	if (hour <= 0) {
+		hour = hour + 12;
+	}
 	if (hour > 12) {
 		hour = hour - 12;
 		noon = "PM";

@@ -3,7 +3,8 @@ const youtube = require('scrape-youtube').default;
 module.exports = {
     name: "youtube",
     aliases: ["yt"],
-	description: `Finds a youtube video using your search query.`,
+    description: `Finds a youtube video using your search query.`,
+    usage: "<search term>",
 	execute(message, args) {
         let searchNum = parseInt(args[1]);
         if (!searchNum.toString().length || searchNum <= 0) { 

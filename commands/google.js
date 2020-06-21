@@ -3,7 +3,8 @@ const google = require("google-it");
 module.exports = {
     name: "google",
     aliases: ["goo", "goog", "gle", "g"],
-	description: `Finds a link using your search query in google.`,
+    description: `Finds a link using your search query in google.`,
+    usage: "<search term>",
 	execute(message, args) {
         let searchNum = parseInt(args[1]);
         if (!searchNum.toString().length || searchNum <= 0) { 

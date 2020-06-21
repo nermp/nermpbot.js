@@ -3,7 +3,9 @@ const { numberOfServers } = require("../config.json");
 
 module.exports = {
 	name: "info",
+	aliases: ["i"],
 	description: "Provides info about the bot. If a user is mentioned, provides info on that user, but only the first one.",
+	usage: "<optional mention of a user>",
 	execute(message) {
 		if (!message.mentions.users.size) {
 			const infoEmbed = new Discord.MessageEmbed()

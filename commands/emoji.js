@@ -1,7 +1,8 @@
 module.exports = {
 	name: "emoji",
 	aliases: ["emo", "e"],
-	description: "Will convert all standard letters and numbers to their corresponding emoji forms.",
+    description: "Will convert all standard letters and numbers to their corresponding emoji forms.",
+    usage: "<message to emojify>",
 	execute(message, args) {
         let word = args.toString().split("");
         let letterMap = new Map([

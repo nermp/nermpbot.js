@@ -1,13 +1,12 @@
 /* eslint-disable brace-style */
 const Discord = require("discord.js");
-const { prefix } = require("../config.json");
-
 
 module.exports = {
     name: "snipe",
     aliases: ["sn", "deleted", "del", "edit", "ed"],
-	description: `Tells you the last deleted or edited message. You can also see previously edited/deleted messages by inputting the command as \`${prefix}snipe <number>\`.`,
-	execute(message, args) {
+	description: `Tells you the last deleted or edited message. You can also see previously edited/deleted messages.`,
+    usage: "<optional number of snipe to see>",
+    execute(message, args) {
         const { snipeinfo } = require(`../server_snipes/${message.guild.id}.json`);
         //message.channel.send(snipeinfo);
         const snipeEmbed = new Discord.MessageEmbed()
