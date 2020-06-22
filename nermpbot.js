@@ -56,7 +56,7 @@ client.on("message", message => {
 	}
 });
 
-function createSnipeCache(guild, message) {
+function createSnipeCache(guild, message, edited, newMessage) {
 	let snipeinfoJSON = { 
 		"snipeinfo": [], 
 	}; 
@@ -90,12 +90,12 @@ function createSnipeCache(guild, message) {
 		}
 		if (message != null) {
 			snipeCache = require(`./server_snipes/${guild.id}.json`);
-			snipeCache.snipeinfo.unshift(createSnipe(message));
+			snipeCache.snipeinfo.unshift(createSnipe(message, edited, newMessage));
 		}
 	});
 }
 
-function createSnipe(message) {
+function createSnipe(message, edited, newMessage) {
 	let today = new Date();
 	let thisMonth = months[today.getMonth()];
 	let hour = today.getHours();
@@ -117,8 +117,13 @@ function createSnipe(message) {
 		second = "0" + second;
 	}
 	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
-	let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, false];
-	return snipe;
+	if (edited == true) {
+		let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, true, newMessage.content];
+		return snipe;
+	} else {
+		let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, false];
+		return snipe;
+	}
 }
 
 client.on("guildCreate", guild => {
@@ -153,7 +158,7 @@ client.on("messageDelete", message => {
 		return;
 	}
 	//the array is [author, message, the date, users avatar, and whether or not the message was edited or not. if it was, then the current message is also included.]
-	createSnipeCache(message.guild, message);
+	createSnipeCache(message.guild, message, false);
 });
 
 client.on("messageUpdate", function(message, newMessage) {
@@ -163,7 +168,7 @@ client.on("messageUpdate", function(message, newMessage) {
 	if (message.content == newMessage.content) {
 		return;
 	}
-	createSnipeCache(message.guild, message);
+	createSnipeCache(message.guild, message, true, newMessage);
 });
 
 // login to Discord with your app"s token

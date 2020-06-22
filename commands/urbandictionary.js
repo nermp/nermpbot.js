@@ -8,7 +8,7 @@ module.exports = {
 	description: "Gives a random word from urban dictionary, but you can also search for a term.",
 	usage: "<optional search term>",
 	execute(message, args) {
-		if (!args || args == "") {
+		if (!args || args == "" || !args.length) {
 			ud.random().then((result) => {
 				const urbanEmbed = new Discord.MessageEmbed()
 				.setColor("#0000FF")
@@ -17,9 +17,10 @@ module.exports = {
 				.setThumbnail("https://cdn.discordapp.com/attachments/717515587504570461/723254952830435398/056200e165284ccd73ec499920dc5d0c.png")
 				.setTimestamp()
 				.addFields(
-					{ name: "word", value: result.word },
-					{ name: "definition", value: result.definition },
-					{ name: "example", value: result.example },
+					{ name: "Word:", value: result.word },
+					{ name: "Definition:", value: result.definition },
+					{ name: "Example:", value: result.example },
+					{ name: "Link:", value: result.permalink },
 				)
 				.setFooter(`Server name: ${message.guild.name}`); 
 				message.channel.send(urbanEmbed);
@@ -36,9 +37,10 @@ module.exports = {
 				.setThumbnail("https://cdn.discordapp.com/attachments/717515587504570461/723254952830435398/056200e165284ccd73ec499920dc5d0c.png")
 				.setTimestamp()
 				.addFields(
-					{ name: "word", value: entries[0].word },
-					{ name: "definition", value: entries[0].definition },
-					{ name: "example", value: entries[0].example },
+					{ name: "Word:", value: entries[0].word },
+					{ name: "Definition:", value: entries[0].definition },
+					{ name: "Example:", value: entries[0].example },
+					{ name: "Link:", value: result.permalink },
 				)
 				.setFooter(`Server name: ${message.guild.name}`); 
 				message.channel.send(urbanEmbed);
