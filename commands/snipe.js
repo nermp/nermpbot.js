@@ -1,7 +1,7 @@
 /* eslint-disable brace-style */
 const Discord = require("discord.js");
 const fs = require("fs");
-const nb = require("../nermpbot.js");
+//const nb = require("../nermpbot.js");
 
 module.exports = {
     name: "snipe",
@@ -12,12 +12,18 @@ module.exports = {
         fs.access(`server_snipes/${message.guild.id}.json`, error => {
             if (!error) {
                 console.log("accessed");
+                const { snipeinfo } = require(`../server_snipes/${message.guild.id}.json`);
+                snipe(snipeinfo, message, args);
             } else {
-                nb.createSnipeCache(message.guild);
+                const snipeinfo = [];
+                snipe(snipeinfo, message, args);
             }
-            const { snipeinfo } = require(`../server_snipes/${message.guild.id}.json`);
-            //message.channel.send(snipeinfo);
-            const snipeEmbed = new Discord.MessageEmbed()
+        });
+	},
+};
+
+let snipe = function(snipeinfo, message, args) {
+    const snipeEmbed = new Discord.MessageEmbed()
                 .setColor("#0000FF")
                 .setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
                 .setTimestamp()
@@ -69,6 +75,5 @@ module.exports = {
             } else {
                     message.channel.send(`You are requesting a snipe that doesn't exist. There are currently ${snipeinfo.length} snipes available. `);
             }
-        });
-	},
+
 };

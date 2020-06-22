@@ -1,3 +1,9 @@
+module.exports = {
+	createSnipeCache: function(guild) {
+		createSnipeCache(guild);
+	},
+};
+
 // require the necessary modules
 const fs = require("fs");
 const Discord = require("discord.js");
@@ -56,7 +62,9 @@ client.on("message", message => {
 	}
 });
 
-function createSnipeCache(guild, message, edited, newMessage) {
+
+let createSnipeCache = function(guild, message, edited, newMessage) {
+	console.log("creating snipe cache");
 	let snipeinfoJSON = { 
 		"snipeinfo": [], 
 	}; 
@@ -91,9 +99,10 @@ function createSnipeCache(guild, message, edited, newMessage) {
 		if (message != null) {
 			snipeCache = require(`./server_snipes/${guild.id}.json`);
 			snipeCache.snipeinfo.unshift(createSnipe(message, edited, newMessage));
-		}
+		} 
+		console.log("snipe cache created");
 	});
-}
+};
 
 function createSnipe(message, edited, newMessage) {
 	let today = new Date();
