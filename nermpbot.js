@@ -102,7 +102,7 @@ function createSnipeCache(guild, message, edited, newMessage) {
 		} 
 		console.log("snipe cache created");
 	});
-};
+}
 
 function createSnipe(message, edited, newMessage) {
 	let today = new Date();
