@@ -15,7 +15,7 @@ module.exports = {
                 console.log(result);
                 let title = result.title();
                 let summary = result.sentences(0).text();
-                let link = result.title().toLowerCase().split(" ");
+                let link = result.title().split(" ");
                 link = link.join("_");
                 console.log(link);
                 const helpEmbed = new Discord.MessageEmbed()
