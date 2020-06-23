@@ -63,7 +63,7 @@ client.on("message", message => {
 });
 
 
-let createSnipeCache = function(guild, message, edited, newMessage) {
+function createSnipeCache(guild, message, edited, newMessage) {
 	console.log("creating snipe cache");
 	let snipeinfoJSON = { 
 		"snipeinfo": [], 
