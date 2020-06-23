@@ -11,9 +11,9 @@ module.exports = {
 			const infoEmbed = new Discord.MessageEmbed()
 			.setColor("#0000FF")
 			.setTitle("Info")
-			.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
+			.setAuthor("nermpbot#8811", "https://i.imgur.com/paVWNPD.png")
 			.setDescription("The nermpbot is a bot.")
-			.setThumbnail("https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
+			.setThumbnail("https://i.imgur.com/paVWNPD.png")
 			.addFields(
 				{ name: "Author:", value: "nermp#5841" },
 				{ name: "Number of servers I'm in:", value: numberOfServers },
@@ -59,7 +59,7 @@ module.exports = {
 			const infoEmbed = new Discord.MessageEmbed()
 			.setColor("#0000FF")
 			.setTitle(`${tag[0]}'s Info`)
-			.setAuthor("NermpBot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
+			.setAuthor("NermpBot#8811", "https://i.imgur.com/paVWNPD.png")
 			.setThumbnail(avatar[0])
 			.addFields(
 				{ name: "ID:", value: id[0] },

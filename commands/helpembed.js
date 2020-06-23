@@ -17,8 +17,8 @@ module.exports = {
         const helpEmbed = new Discord.MessageEmbed()
 			.setColor("#0000FF")
 			.setTitle("Help")
-			.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
-			.setThumbnail("https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
+			.setAuthor("nermpbot#8811", "https://i.imgur.com/paVWNPD.png")
+			.setThumbnail("https://i.imgur.com/paVWNPD.png")
 			.setTimestamp()
             .setFooter(`Server name: ${message.guild.name}`); 
         for (let x = 0; x < data.length; x++) {

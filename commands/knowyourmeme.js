@@ -43,8 +43,8 @@ module.exports = {
 				const memeEmbed = new Discord.MessageEmbed()
 				.setColor("#0000FF")
 				.setTitle("Know Your Meme Search")
-				.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
-				.setThumbnail("https://cdn.discordapp.com/attachments/717523101545660437/724729992348434452/5MCEddXFpb0AAAAAElFTkSuQmCC.png")
+				.setAuthor("nermpbot#8811", "https://i.imgur.com/paVWNPD.png")
+				.setThumbnail("https://i.imgur.com/2JzZYfF.png")
 				.setTimestamp()
 				.addFields(
 					{ name: "Meme:", value: result.name },
@@ -69,8 +69,8 @@ module.exports = {
 				const memeEmbed = new Discord.MessageEmbed()
 				.setColor("#0000FF")
 				.setTitle("Know Your Meme Search")
-				.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
-				.setThumbnail("https://cdn.discordapp.com/attachments/717523101545660437/724729992348434452/5MCEddXFpb0AAAAAElFTkSuQmCC.png")
+				.setAuthor("nermpbot#8811", "https://i.imgur.com/paVWNPD.png")
+				.setThumbnail("https://i.imgur.com/2JzZYfF.png")
 				.setTimestamp()
 				.addFields(
 					{ name: "Meme:", value: result.name },

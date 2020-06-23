@@ -13,8 +13,8 @@ module.exports = {
 				const urbanEmbed = new Discord.MessageEmbed()
 				.setColor("#0000FF")
 				.setTitle("Urban Dictionary Search")
-				.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
-				.setThumbnail("https://cdn.discordapp.com/attachments/717515587504570461/723254952830435398/056200e165284ccd73ec499920dc5d0c.png")
+				.setAuthor("nermpbot#8811", "https://i.imgur.com/paVWNPD.png")
+				.setThumbnail("https://i.imgur.com/8iNKrvU.png")
 				.setTimestamp()
 				.addFields(
 					{ name: "Word:", value: result.word },
@@ -33,14 +33,14 @@ module.exports = {
 				const urbanEmbed = new Discord.MessageEmbed()
 				.setColor("#0000FF")
 				.setTitle("Urban Dictionary Search")
-				.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
-				.setThumbnail("https://cdn.discordapp.com/attachments/717515587504570461/723254952830435398/056200e165284ccd73ec499920dc5d0c.png")
+				.setAuthor("nermpbot#8811", "https://i.imgur.com/paVWNPD.png")
+				.setThumbnail("https://i.imgur.com/8iNKrvU.png")
 				.setTimestamp()
 				.addFields(
 					{ name: "Word:", value: entries[0].word },
 					{ name: "Definition:", value: entries[0].definition },
 					{ name: "Example:", value: entries[0].example },
-					{ name: "Link:", value: result.permalink },
+					{ name: "Link:", value: entries[0].permalink },
 				)
 				.setFooter(`Server name: ${message.guild.name}`); 
 				message.channel.send(urbanEmbed);

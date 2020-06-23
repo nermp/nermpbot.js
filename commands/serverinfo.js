@@ -28,7 +28,7 @@ module.exports = {
         const serverinfoEmbed = new Discord.MessageEmbed()
 			.setColor("#0000FF")
 			.setTitle(`Info for ${guild.name}`)
-			.setAuthor("nermpbot#8811", "https://cdn.discordapp.com/avatars/717820698977894471/13e45a6a5baef2be0f40fbbdd05477be.png")
+			.setAuthor("nermpbot#8811", "https://i.imgur.com/paVWNPD.png")
 			.setThumbnail(guild.iconURL())
 			.addFields(
                 { name: "Availablity (for testing):", value: guild.available },
