@@ -31,15 +31,15 @@ let snipe = function(snipeinfo, message, args) {
             if (args == "clear") {
                 if (message.member.hasPermission("ADMINISTRATOR")) {
                     fs.unlink(`./server_snipes/${message.guild.id}.json`, err => {
-                        if (err.code == "ENOENT") {
-                            message.channel.send("There are no snipes to clear.");
-                            console.log(err);
-                        } else if (err) {
-                            message.channel.send("There was an issue clearing the snipes.");
-                            console.log(err);
-                        } else {
+                        if (!err) {
                             console.log("snipes cleared");
                             message.channel.send("Snipes cleared.");
+                        } else if (err.code == "ENOENT") {
+                            message.channel.send("There are no snipes to clear.");
+                            console.log(err);
+                        } else {
+                            message.channel.send("There was an issue clearing the snipes.");
+                            console.log(err);
                         }
                     });
                 } else {
