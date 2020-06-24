@@ -28,7 +28,24 @@ let snipe = function(snipeinfo, message, args) {
                 .setAuthor("nermpbot#8811", "https://i.imgur.com/paVWNPD.png")
                 .setTimestamp()
                 .setFooter(`Server name: ${message.guild.name}`);
-            if(snipeinfo.length == 0) {
+            if (args == "clear") {
+                if (message.member.hasPermission("ADMINISTRATOR")) {
+                    fs.unlink(`./server_snipes/${message.guild.id}.json`, err => {
+                        if (err.code == "ENOENT") {
+                            message.channel.send("There are no snipes to clear.");
+                            console.log(err);
+                        } else if (err) {
+                            message.channel.send("There was an issue clearing the snipes.");
+                            console.log(err);
+                        } else {
+                            console.log("snipes cleared");
+                            message.channel.send("Snipes cleared.");
+                        }
+                    });
+                } else {
+                    message.channel.send("Only admins can clear snipes.");
+                }
+            } else if(snipeinfo.length == 0) {
                 message.channel.send(`There are no snipes available at this time.`);
             } else if (args === "" || args <= 0) {
                 snipeEmbed.setTitle(`Snipe (1/${snipeinfo.length}) `);
