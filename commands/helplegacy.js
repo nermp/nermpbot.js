@@ -18,7 +18,7 @@ module.exports = {
 		            message.reply("i've sent you a DM with all commands");
 	            })
 	            .catch(error => {
-		            console.error(`could not send help DM to ${message.author.tag}.\n`, error);s
+		            console.error(`could not send help DM to ${message.author.tag}.\n`, error);
 		            message.reply("i can't DM you (you might have me blocked or DM's from people in this server turned off.)");
 	            });
         }
