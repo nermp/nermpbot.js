@@ -1,7 +1,7 @@
 module.exports = {
 	name: "reverse",
     description: `Reverses the text inputted.`,
-    aliases: ["r", "esrever"],
+    aliases: ["r", "esrever", "backwards", "back"],
     usage: "<text to reverse>",
 	execute(message, args) {
         if (!args.length) {

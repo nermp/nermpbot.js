@@ -1,5 +1,5 @@
 {
 	"prefix": "-",
-	"token": "NzE3ODIwNjk4OTc3ODk0NDcx.XuvBbg.d8L1ZjXN6rei-4XR3b-PMPVBrBo",
+	"token": process.env.TOKEN,
 	"numberOfServers": []
 }
