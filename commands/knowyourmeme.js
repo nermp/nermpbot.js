@@ -14,6 +14,7 @@ module.exports = {
             ["`", ""],
             ['"', ""],
             ["'", ""],
+            ["%27", ""],
             ["/", ""],
             [",", ""],
             ["&", ""],
@@ -32,14 +33,29 @@ module.exports = {
         ]);
         if (!args.length) {
             kym.random().then((result) => {
-                let link = result.name.toLowerCase().split(" ");
-                for (let x = 0; x < letterMap.size; x++) {
-                    if (letterMap.has(link[x])) {
-                        link[x] = letterMap.get(link[x]);
+                let otherLink = decodeURIComponent(result.name).split("");
+                for (let x = 0; x < otherLink.length; x++) {
+                    if (letterMap.has(otherLink[x])) {
+                        otherLink[x] = letterMap.get(otherLink[x]);
+                        if (otherLink[x].includes(",")) {
+                            otherLink[x].replace(",", "");
+                        }
                     }
                 }
-                link = link.join("-");
-                link = `https://knowyourmeme.com/memes/${link}`;
+                otherLink = otherLink.join("");
+                otherLink = otherLink.split(" ");
+                otherLink = otherLink.join("-");
+                let link = otherLink.toLowerCase().split("");
+                for (let i = 0; i < otherLink.split("-").length; i++) {
+                    for (let x = 1; x < link.length; x++) {
+                        if (link[x].toString() == "-" && link[x - 1].toString() == "-") {
+                            console.log(link[x] + " and " + link[x - 1]);
+                            link.splice(x, 1);
+                            x = x - 1;
+                        }
+                    }
+                }
+                link = `https://knowyourmeme.com/memes/${link.join("")}`;
 				const memeEmbed = new Discord.MessageEmbed()
 				.setColor("#0000FF")
 				.setTitle("Know Your Meme Search")
@@ -56,16 +72,31 @@ module.exports = {
 			}).catch((error) => {
 				console.error(error);
             });        
-        } else{
+        } else {
             kym.search(args.toString()).then((result) => {
-                let link = result.name.toLowerCase().split(" ");
-                for (let x = 0; x < letterMap.size; x++) {
-                    if (letterMap.has(link[x])) {
-                        link[x] = letterMap.get(link[x]);
+                let otherLink = decodeURIComponent(result.name).split("");
+                for (let x = 0; x < otherLink.length; x++) {
+                    if (letterMap.has(otherLink[x])) {
+                        otherLink[x] = letterMap.get(otherLink[x]);
+                        if (otherLink[x].includes(",")) {
+                            otherLink[x].replace(",", "");
+                        }
                     }
                 }
-                link = link.join("-");
-                link = `https://knowyourmeme.com/memes/${link}`;
+                otherLink = otherLink.join("");
+                otherLink = otherLink.split(" ");
+                otherLink = otherLink.join("-");
+                let link = otherLink.toLowerCase().split("");
+                for (let i = 0; i < otherLink.split("-").length; i++) {
+                    for (let x = 1; x < link.length; x++) {
+                        if (link[x].toString() == "-" && link[x - 1].toString() == "-") {
+                            console.log(link[x] + " and " + link[x - 1]);
+                            link.splice(x, 1);
+                            x = x - 1;
+                        }
+                    }
+                }
+                link = `https://knowyourmeme.com/memes/${link.join("")}`;
 				const memeEmbed = new Discord.MessageEmbed()
 				.setColor("#0000FF")
 				.setTitle("Know Your Meme Search")
