@@ -9,8 +9,8 @@ const fs = require("fs");
 const Discord = require("discord.js");
 
 // define constants and variables
-const { token, numberOfServers } = require("./config.json");
-const prefix = process.env.TOKEN;
+const { prefix, numberOfServers } = require("./config.json");
+const token = process.env.TOKEN;
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
