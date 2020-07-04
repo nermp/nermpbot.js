@@ -56,7 +56,7 @@ module.exports = {
         }
         if (!args.length || args > numCommand || args < 1) {
             message.channel.send(embeds[0]);
-        } else if (args > 1 && args < numCommand) {
+        } else if (args > 1 && args <= numCommand) {
             message.channel.send(embeds[args - 1]);
         } else {
             const name = args[0].toLowerCase();
