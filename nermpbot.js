@@ -12,7 +12,7 @@ const Discord = require("discord.js");
 const { prefix, numberOfServers } = require("./config.json");
 //token below for github (uncomment when pushing this file)
 const token = process.env.TOKEN;
-//const token = "NzIxNDY4MjQ4MTc2MDY2NjQw.XwECAw.T8PPhdqu-SRrn7eh9RtBkKjeUzU";
+//const token = "nermpbeta token";
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
