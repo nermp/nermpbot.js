@@ -10,7 +10,9 @@ const Discord = require("discord.js");
 
 // define constants and variables
 const { prefix, numberOfServers } = require("./config.json");
+//token below for github (uncomment when pushing this file)
 const token = process.env.TOKEN;
+//const token = "NzIxNDY4MjQ4MTc2MDY2NjQw.XwECAw.T8PPhdqu-SRrn7eh9RtBkKjeUzU";
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
@@ -127,11 +129,33 @@ function createSnipe(message, edited, newMessage) {
 		second = "0" + second;
 	}
 	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
+	let content = message.content;
+	if (!message.attachments) {
+		return;
+	} else { 
+		const imageURL = message.attachments.map(url => {
+			return url.proxyURL;
+		});
+		if (!message.content) {
+			content = imageURL[0].toString();
+		} else {
+			content = `${message.content} ${imageURL[0].toString()}`;
+		}
+	}
 	if (edited == true) {
-		let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, true, newMessage.content];
+		let newContent = newMessage.content;
+		const imageURL = newMessage.attachments.map(url => {
+			return url.proxyURL;
+		});
+		if (!newMessage.content) {
+			newContent = imageURL[0].toString();
+		} else {
+			newContent = `${newMessage.content} ${imageURL[0].toString()}`;
+		}
+		let snipe = [message.author, content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, true, newContent];
 		return snipe;
 	} else {
-		let snipe = [message.author, message.content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, false];
+		let snipe = [message.author, content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, false];
 		return snipe;
 	}
 }
