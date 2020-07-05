@@ -130,12 +130,10 @@ function createSnipe(message, edited, newMessage) {
 	}
 	let date = `${hour}:${minute}:${second} ${noon} on ${thisMonth} ${today.getDate()},  ${today.getFullYear()}`;
 	let content = message.content;
-	if (!message.attachments) {
-		return;
-	} else { 
-		const imageURL = message.attachments.map(url => {
-			return url.proxyURL;
-		});
+	const imageURL = message.attachments.map(url => {
+		return url.proxyURL;
+	});
+	if (typeof imageURL[0] !== "undefined") {
 		if (!message.content) {
 			content = imageURL[0].toString();
 		} else {
@@ -144,13 +142,15 @@ function createSnipe(message, edited, newMessage) {
 	}
 	if (edited == true) {
 		let newContent = newMessage.content;
-		const imageURL = newMessage.attachments.map(url => {
+		const newImageURL = newMessage.attachments.map(url => {
 			return url.proxyURL;
 		});
-		if (!newMessage.content) {
-			newContent = imageURL[0].toString();
-		} else {
-			newContent = `${newMessage.content} ${imageURL[0].toString()}`;
+		if (typeof newImageURL[0] !== "undefined") {
+			if (!newMessage.content) {
+				newContent = newImageURL[0].toString();
+			} else {
+				newContent = `${newMessage.content} ${newImageURL[0].toString()}`;
+			}	
 		}
 		let snipe = [message.author, content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, true, newContent];
 		return snipe;
