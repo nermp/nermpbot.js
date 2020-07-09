@@ -33,6 +33,8 @@ for (const file of commandFiles) {
 // when the client is ready, run this code
 // this event will only trigger one time after logging in
 client.once("ready", () => {
+	client.user.setPresence({ activity: { name: "nermpbot.js", type: "PLAYING" }, status: "online" });
+	console.log(client.user.username);
 	console.log("Ready!");
 	let guilds = client.guilds.map(guild => {
 		return guild.id;
