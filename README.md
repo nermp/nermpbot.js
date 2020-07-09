@@ -1,5 +1,6 @@
 # nermpbot.js
 The NermpBot is a discord bot.
+Updated on July 4th, 2020.
 
 -add
 Finds the sum of two numbers.
