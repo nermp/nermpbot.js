@@ -61,8 +61,15 @@ module.exports = {
         } else {
             const name = args[0].toLowerCase();
             const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
+            if (!command) {
+                return message.reply("that command could not be found.");
+            }
             commandInfo.push(`**Command Name:** ${command.name}`);
-            if (command.aliases) commandInfo.push(`**Aliases:** ${command.aliases.join(", ")}`);
+            if (command.aliases && typeof command.aliases == "object") {
+                commandInfo.push(`**Aliases:** ${command.aliases.join(", ")}`);
+            } else if (command.aliases) { 
+                commandInfo.push(`**Aliases:** ${command.aliases}`);
+            }
             if (command.description) commandInfo.push(`**Description:** ${command.description}`);
             if (command.usage) commandInfo.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
             message.channel.send(commandInfo, { split: true });
