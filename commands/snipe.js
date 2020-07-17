@@ -57,11 +57,13 @@ let snipe = function(snipeinfo, message, args) {
                         { name: "Message edited to:", value: snipeinfo[0][6] },
                         { name: "Time edited:", value: snipeinfo[0][2] },
                         { name: "Channel edited in:", value: snipeinfo[0][4] },
+                        { name: "Message link:", value: snipeinfo[0][7] },
                     );
                 } else {
                     snipeEmbed.addFields(
                         { name: "Author:", value: snipeinfo[0][0] },
                         { name: "Message deleted:", value: snipeinfo[0][1] },
+                        { name: "Message deleter:", value: snipeinfo[0][6] },
                         { name: "Time deleted:", value: snipeinfo[0][2] },
                         { name: "Channel deleted in:", value: snipeinfo[0][4] },
                     );
@@ -77,11 +79,13 @@ let snipe = function(snipeinfo, message, args) {
                         { name: "Message edited to:", value: snipeinfo[args - 1][6] },
                         { name: "Time edited:", value: snipeinfo[args - 1][2] },
                         { name: "Channel edited in:", value: snipeinfo[args - 1][4] },
+                        { name: "Message link:", value: snipeinfo[args - 1][7] },
                     );
                 } else {
                     snipeEmbed.addFields(
                         { name: "Author:", value: snipeinfo[args - 1][0] },
                         { name: "Message deleted:", value: snipeinfo[args - 1][1] },
+                        { name: "Message deleter:", value: snipeinfo[args - 1][6] },
                         { name: "Time deleted:", value: snipeinfo[args - 1][2] },
                         { name: "Channel deleted in:", value: snipeinfo[args - 1][4] },
                     );

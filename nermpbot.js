@@ -154,10 +154,10 @@ function createSnipe(message, edited, newMessage) {
 				newContent = `${newMessage.content} ${newImageURL[0].toString()}`;
 			}	
 		}
-		let snipe = [message.author, content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, true, newContent];
+		let snipe = [message.author, content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, true, newContent, message.url];
 		return snipe;
 	} else {
-		let snipe = [message.author, content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, false];
+		let snipe = [message.author, content, date, message.author.displayAvatarURL({ format: "png", dynamic: true }), message.channel, false, newMessage];
 		return snipe;
 	}
 }
@@ -189,21 +189,36 @@ client.on("guildDelete", guild => {
 	channel.send(leaveEmbed);
 });
 
-client.on("messageDelete", message => {
-	if (message.author.bot) {
-		return;
+client.on("messageDelete", async message => {
+	if (message.author.bot) return;
+	if (!message.guild) return;
+	let deleter = "";
+	const fetchedLogs = await message.guild.fetchAuditLogs({
+		limit: 1,
+		type: 'MESSAGE_DELETE',
+	});
+	const deletionLog = fetchedLogs.entries.first();
+	if (!deletionLog) {
+		deleter = `Most likely ${message.author}`;
+		console.log(`${message.author} most likely just deleted their own message.`);
+	} else {
+		const { executor, target } = deletionLog;
+		if (target.id === message.author.id) {
+			deleter = executor;
+			console.log(`A message by ${message.author.tag} was deleted by ${executor.tag}.`);
+		} else {
+			deleter = `Most likely ${message.author}`;
+			console.log(`${message.author} most likely just deleted their own message.`);
+		}
 	}
 	//the array is [author, message, the date, users avatar, and whether or not the message was edited or not. if it was, then the current message is also included.]
-	createSnipeCache(message.guild, message, false);
+	createSnipeCache(message.guild, message, false, deleter);
 });
 
 client.on("messageUpdate", function(message, newMessage) {
-	if (message.author.bot) {
-		return;
-	}
-	if (message.content == newMessage.content) {
-		return;
-	}
+	if (message.author.bot) return;
+	if (message.content == newMessage.content) return;
+	if (!message.guild) return;
 	createSnipeCache(message.guild, message, true, newMessage);
 });
 
