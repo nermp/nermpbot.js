@@ -7,7 +7,7 @@ module.exports = {
 // require the necessary modules
 const fs = require("fs");
 const Discord = require("discord.js");
-require("./express.js");
+//require("./express.js");
 
 // define constants and variables
 const { prefix, numberOfServers } = require("./config.json");
