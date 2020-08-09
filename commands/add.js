@@ -36,7 +36,6 @@ module.exports = {
             } else {
                 message.channel.send("Something went wrong. Most likely, numbers weren't inputted.");
             }
-            message.channel.send(sum);
         }
     },
 };

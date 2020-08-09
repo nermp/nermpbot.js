@@ -7,12 +7,12 @@ module.exports = {
 // require the necessary modules
 const fs = require("fs");
 const Discord = require("discord.js");
-//require("./express.js");
 
 // define constants and variables
 const { prefix, numberOfServers } = require("./config.json");
 //token below for github (uncomment when pushing this file)
 const token = process.env.TOKEN;
+//token below for testing (replace with "nermpbeta token" when pushing to avoid releasing that token)
 //const token = "nermpbeta token";
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -26,8 +26,7 @@ let snipeCache;
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 
-	// set a new item in the Collection
-	// with the key as the command name and the value as the exported module
+	// set a new item in the Collection with the key as the command name and the value as the exported module
 	client.commands.set(command.name, command);
 }
 
@@ -117,10 +116,6 @@ function createSnipe(message, edited, newMessage) {
 	let minute = today.getMinutes();
 	let second = today.getSeconds();
 	let noon = "AM";
-	hour = hour - 5;
-	if (hour <= 0) {
-		hour = hour + 12;
-	}
 	if (hour > 12) {
 		hour = hour - 12;
 		noon = "PM";
@@ -204,13 +199,13 @@ client.on("messageDelete", async message => {
 		console.log(`${message.author} most likely just deleted their own message.`);
 	} else {
 		const { executor, target } = deletionLog;
-		if (target.id === message.author.id) {
-			deleter = executor;
-			console.log(`A message by ${message.author.tag} was deleted by ${executor.tag}.`);
-		} else {
-			deleter = `Most likely ${message.author}`;
-			console.log(`${message.author} most likely just deleted their own message.`);
-		}
+			if (target.id === message.author.id) {
+				deleter = executor;
+				console.log(`A message by ${message.author.tag} was deleted by ${executor.tag}.`);
+			} else {
+				deleter = `Most likely ${message.author}`;
+				console.log(`${message.author} most likely just deleted their own message.`);
+			}
 	}
 	//the array is [author, message, the date, users avatar, and whether or not the message was edited or not. if it was, then the current message is also included.]
 	createSnipeCache(message.guild, message, false, deleter);
